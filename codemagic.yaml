@@ -5,7 +5,7 @@ workflows:
     environment:
       vars:
         PACKAGE_NAME: "com.seunome.sorteiofifa"
-      node: 22.17.1
+      node: 20.5.0
     scripts:
       - npm install -g @ionic/cli
       - npm cache clean --force
