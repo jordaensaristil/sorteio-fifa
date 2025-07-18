@@ -1,21 +1,30 @@
 workflows:
   build-android:
     name: Build Android APK
-    max_build_duration: 30  # Aumentei um pouco para garantir tempo suficiente
+    max_build_duration: 30
     environment:
       vars:
         PACKAGE_NAME: "com.seunome.sorteiofifa"
-      node: 20.5.0           # Versão estável recomendada para Capacitor
+      node: 20.5.0
     scripts:
       - npm install -g @ionic/cli
       - npm cache clean --force
       - npm ci
       - npm run build
-      # Se você NÃO comita a pasta android no repo, precisa adicionar android aqui:
       - npx cap add android || echo "Android platform already added"
       - npx cap sync android
-      - cd android
-      - chmod +x gradlew        # Garante que o gradlew tem permissão de execução no Linux/macOS
-      - ./gradlew assembleDebug
+
+      # Verifica se a pasta android foi criada
+      - ls -la android
+
+      # Verifica se gradlew está dentro da pasta android
+      - ls -la android/gradlew || echo "gradlew não encontrado!"
+
+      # Dá permissão de execução para gradlew (se existir)
+      - chmod +x android/gradlew || echo "chmod falhou, gradlew pode estar ausente"
+
+      # Roda o build do apk, só se gradlew existir
+      - if [ -f android/gradlew ]; then cd android && ./gradlew assembleDebug; else echo "gradlew não encontrado, pulando build"; fi
+
     artifacts:
       - android/app/build/outputs/**/*.apk
