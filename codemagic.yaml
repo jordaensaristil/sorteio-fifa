@@ -11,20 +11,19 @@ workflows:
       - npm cache clean --force
       - npm ci
       - npm run build
-      - npx cap add android || echo "Android platform already added"
+
+      # Apenas sincroniza a plataforma Android já adicionada e versionada no Git
       - npx cap sync android
 
-      # Verifica se a pasta android foi criada
+      # Debug: lista arquivos da pasta android
       - ls -la android
 
-      # Verifica se gradlew está dentro da pasta android
+      # Debug: verifica se o gradlew está presente e tem permissão
       - ls -la android/gradlew || echo "gradlew não encontrado!"
-
-      # Dá permissão de execução para gradlew (se existir)
       - chmod +x android/gradlew || echo "chmod falhou, gradlew pode estar ausente"
 
-      # Roda o build do apk, só se gradlew existir
-      - if [ -f android/gradlew ]; then cd android && ./gradlew assembleDebug; else echo "gradlew não encontrado, pulando build"; fi
+      # Build com logs detalhados para facilitar debug se der erro
+      - if [ -f android/gradlew ]; then cd android && ./gradlew assembleDebug --stacktrace --info; else echo "gradlew não encontrado, pulando build"; fi
 
     artifacts:
       - android/app/build/outputs/**/*.apk
