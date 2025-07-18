@@ -2,7 +2,7 @@ workflows:
   build_android:
     name: Build Android App (Vue + Capacitor)
     environment:
-      node: 18.20.2
+      node: 20.5.0
       java: 11
       vars:
         PACKAGE_NAME: "com.seuapp.nome"
