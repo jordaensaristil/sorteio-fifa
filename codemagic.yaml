@@ -1,29 +1,24 @@
 workflows:
-  build-android:
-    name: Build Android APK
-    max_build_duration: 30
+  build_android:
+    name: Build Android App (Vue + Capacitor)
     environment:
+      node: 18.20.2
+      java: 11
       vars:
-        PACKAGE_NAME: "com.seunome.sorteiofifa"
-      node: 20.5.0
+        PACKAGE_NAME: "com.seuapp.nome"  # Substitua pelo seu ID do app
     scripts:
-      - npm install -g @ionic/cli
-      - npm cache clean --force
-      - npm ci
-      - npm run build
-
-      # Apenas sincroniza a plataforma Android já adicionada e versionada no Git
-      - npx cap sync android
-
-      # Debug: lista arquivos da pasta android
-      - ls -la android
-
-      # Debug: verifica se o gradlew está presente e tem permissão
-      - ls -la android/gradlew || echo "gradlew não encontrado!"
-      - chmod +x android/gradlew || echo "chmod falhou, gradlew pode estar ausente"
-
-      # Build com logs detalhados para facilitar debug se der erro
-      - if [ -f android/gradlew ]; then cd android && ./gradlew assembleDebug --stacktrace --info; else echo "gradlew não encontrado, pulando build"; fi
-
+      - name: Instalar dependências
+        script: |
+          npm install
+      - name: Build do Vue
+        script: |
+          npm run build
+      - name: Sincronizar Capacitor
+        script: |
+          npx cap sync android
+      - name: Build Android com Gradle
+        script: |
+          cd android
+          ./gradlew assembleDebug --stacktrace
     artifacts:
       - android/app/build/outputs/**/*.apk
