@@ -5,11 +5,14 @@ workflows:
       node: 18.20.2
       java: 11
       vars:
-        PACKAGE_NAME: "com.seuapp.nome"  # Substitua pelo seu ID do app
+        PACKAGE_NAME: "com.seuapp.nome"
     scripts:
       - name: Instalar dependências
         script: |
           npm install
+      - name: Corrigir permissões do Vite
+        script: |
+          chmod +x node_modules/.bin/vite
       - name: Build do Vue
         script: |
           npm run build
