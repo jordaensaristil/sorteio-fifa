@@ -1,0 +1,6 @@
+{
+    "appId": "com.seunome.sorteiofifa",
+    "appName": "Sorteio FIFA",
+    "webDir": "dist",
+    "bundledWebRuntime": false
+  }

@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Vite
+dist/
+.vite/
+
+# Capacitor
+android/app/build/
+android/.gradle/
+android/.idea/
+android/local.properties
+android/.cxx/
+android/capacitor-cordova-android-plugins/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Codemagic
+.codemagic/
+
+# Capacitor iOS (caso adicione no futuro)
+ios/
+Pods/
+*.xcworkspace
+*.xcodeproj
+*.xcuserdata
+DerivedData/
+
+# Outros
+.env
