@@ -10,9 +10,10 @@ workflows:
       - name: Instalar dependências
         script: |
           npm install
-      - name: Corrigir permissões do Vite
+      - name: Corrigir permissões dos binários locais
         script: |
           chmod +x node_modules/.bin/vite
+          chmod +x node_modules/.bin/cap
       - name: Build do Vue
         script: |
           npm run build
