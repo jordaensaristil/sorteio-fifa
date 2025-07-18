@@ -10,13 +10,6 @@ package-lock.json
 dist/
 .vite/
 
-# Capacitor
-android/app/build/
-android/.gradle/
-android/.idea/
-android/local.properties
-android/.cxx/
-android/capacitor-cordova-android-plugins/
 
 # macOS
 .DS_Store
