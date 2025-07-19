@@ -1,29 +1,24 @@
 workflows:
   build_android:
-    name: Build Android App (Vue + Capacitor)
+    name: Build Android com Cordova
     environment:
       node: 20.5.0
       java: 11
-      vars:
-        PACKAGE_NAME: "com.seuapp.nome"
+      android: true
     scripts:
       - name: Instalar dependências
         script: |
           npm install
-      - name: Corrigir permissões dos binários locais
-        script: |
-          chmod +x node_modules/.bin/vite
-          chmod +x node_modules/.bin/cap
-      - name: Build do Vue
+      - name: Build Vue para Cordova
         script: |
           npm run build
-      - name: Sincronizar Capacitor
+      - name: Preparar Cordova
         script: |
-          npx cap sync android
-      - name: Build Android com Gradle
+          cd cordova
+          npx cordova platform add android || echo "Android já adicionado"
+      - name: Build Cordova Android
         script: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug --stacktrace --info --refresh-dependencies
+          cd cordova
+          npx cordova build android --no-interactive
     artifacts:
-      - android/app/build/outputs/**/*.apk
+      - cordova/platforms/android/app/build/outputs/**/*.apk
